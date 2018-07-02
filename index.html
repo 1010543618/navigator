@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
   <head>
-    <title>PBDB Navigator</title>
+    <title data-i18n="title">PBDB Navigator</title>
 
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Language" content="en" />
@@ -12,14 +12,15 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="apple-touch-icon" sizes="120x120" href="build/img/touch-icon-iphone-retina.png">
     <link rel="apple-touch-icon" sizes="152x152" href="build/img/touch-icon-ipad-retina.png">
+    <!-- 谷歌被墙 -->
 
     <link rel="stylesheet" href="assets/css/lib/leaflet.css" type="text/css"/>
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans" type="text/css"/>
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:200" type="text/css">
+    <!-- <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans" type="text/css"/>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:200" type="text/css"> -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="build/css/navigator.min.css" type="text/css"/>
-
-    <script>
+    
+    <!-- <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -27,7 +28,7 @@
 
       ga('create', 'UA-46265774-1', 'paleobiodb.org');
       ga('send', 'pageview');
-    </script>
+    </script> -->
 
   </head>
 
@@ -43,7 +44,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/navigator"><t class="brand-small">PBDB</t> Navigator</a>
+          <a class="navbar-brand" href="/navigator"><t class="brand-small" data-i18n="title">PBDB</t> <span data-i18n="navigator">Navigator</span></a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -62,9 +63,9 @@
             </li>
           </ul>
           <ul class="nav navbar-nav">
-            <li class="navbar-text about"><a data-toggle="modal" href="#aboutModal" class="navbar-link">About</a></li>
-            <li class="navbar-text help"><a data-toggle="modal" href="#helpModal" class="navbar-link">Help</a></li>
-            <li class="navbar-text help"><a data-toggle="modal" target="_blank" href="https://www.youtube.com/watch?v=n_FkX4Vf_8I" class="navbar-link">Walkthrough</a></li>
+            <li class="navbar-text about"><a data-toggle="modal" href="#aboutModal" class="navbar-link" data-i18n="about">About</a></li>
+            <li class="navbar-text help"><a data-toggle="modal" href="#helpModal" class="navbar-link" data-i18n="help">Help</a></li>
+            <li class="navbar-text help"><a data-toggle="modal" target="_blank" href="https://www.youtube.com/watch?v=n_FkX4Vf_8I" class="navbar-link" data-i18n="walkthrough">Walkthrough</a></li>
             <li class="navbar-text" id="taxaBrowserNavbar"><a href="#" class="navbar-link">Taxa Browser</a></li>
             <li class="navbar-text" id="getUrlNavbar"><a data-toggle="modal" href="#saveBox" class="navbar-link">Get URL</a></li>
           </ul>
@@ -72,8 +73,8 @@
       </div> <!-- end navbar -->
 
       <div id="waiting">
-        <h2>Initializing application...</h2>
-        <p>Please be patient. It may take a moment.</p>
+        <h2 data-i18n="waiting-title">Initializing application...</h2>
+        <p data-i18n="waiting-text">Please be patient. It may take a moment.</p>
       </div>
 
       <div class="row" id="graphicRow">
@@ -122,7 +123,7 @@
           </div>
 
           <div class="filters">
-            <p><strong id="filterTitle">Filters</strong></p>
+            <p><strong id="filterTitle" data-i18n="filters">Filters</strong></p>
             <div id="selectedInterval" class="filter"></div>
             <div id="personFilter" class="filter"></div>
             <div id="taxon" class="filter"></div>
@@ -130,7 +131,7 @@
           </div>
           <div id="mapControls">
             <div class="customControl buttons leaflet-control">
-              <div class="zoom-in mapCtrl" title="Zoom in"><i class="fa fa-plus ctrlButton"></i></div>
+              <div class="zoom-in mapCtrl" title="Zoom in{{aaa}}"><i class="fa fa-plus ctrlButton"></i></div>
               <div class="zoom-out mapCtrl" title="Zoom out"><i class="fa fa-minus ctrlButton"></i></div>
               <div class="rotate mapCtrl" title="Toggle paleogeography"><div id="rotateIcon"></div></div>
               <div class="taxa mapCtrl" title="Toggle taxa browser"><i class="fa fa-bug fa-2x ctrlButton"></i></div>
@@ -675,12 +676,25 @@
     <script src="build/js/lib/topojson.v1.min.js"></script>
     <script src="build/js/lib/d3.geo.projection.v0.min.js" charset="utf-8"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> -->
     <script>window.jQuery || document.write('<script src="build/js/lib/jquery-2.0.3.min.js">\x3C/script>')</script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/1.0.5/jquery.hammer.min.js"></script>
     <script>window.Hammer || document.write('<script src="build/js/lib/jquery.hammer.min.js">\x3C/script>')</script>
 
     <script src="build/js/script.min.js"></script>
+
+    <!-- i18n -->
+    <script src="build/js/lib/jquery.i18n.js"></script>
+    <script src="build/js/lib/jquery.i18n.messagestore.js"></script>
+    <script>
+      $( document ).ready( function( $ ) {
+        'use strict';
+        var i18n = $.i18n();
+        i18n.load( 'i18n/zh-CN.json', 'zh-CN' ).done(function(){
+          $( 'html' ).i18n();
+        });
+      } );
+    </script>
   </body>
 </html>
