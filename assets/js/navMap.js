@@ -87,7 +87,9 @@ var navMap = (function() {
       function mapSelection(zoom) {
         // If viewing the projected map...
         var newBounds = map.getBounds();
+        // 是否移动超过当前地球
         if (Math.abs(newBounds._northEast.lng) + Math.abs(newBounds._southWest.lng) > 360) {
+          alert('移动过远')
           var changeMaps = true;
         }
         if (zoom < 3 || zoom > 3 && changeMaps || prevzoom === 4 && zoom === 3 && changeMaps) {
