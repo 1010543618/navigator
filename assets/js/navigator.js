@@ -4,7 +4,8 @@ var paleo_nav = (function() {
   var dataUrl = window.location.origin,
       testUrl = "https://paleobiodb.org",
       stateUrl = "https://paleobiodb.org",
-      dataService = "/data1.2";
+      dataService = "/data1.2",
+      siteUrl = window.location.origin;
 
   if ( window.location.search.indexOf("local") > -1 ) {
     dataUrl = window.location.origin + ":3000";
@@ -61,7 +62,7 @@ var paleo_nav = (function() {
           d3.select("#map").style("height", function() {
             return ((window.innerHeight * 0.70) - 70) + "px";
           });
-          map.setView([7,0], 3, {animate:false});
+          // map.setView([7,0], 3, {animate:false});
           navMap.refresh("reset");
           map.invalidateSize();
         } else {
@@ -618,7 +619,8 @@ var paleo_nav = (function() {
         ne.lat = 90;
       }
 
-      var prevalenceURL = navMap.parseURL(dataUrl + dataService + "/occs/prevalence.json?limit=50&lngmin=" + sw.lng.toFixed(1) + "&lngmax=" + ne.lng.toFixed(1) + "&latmin=" + sw.lat.toFixed(1)  + "&latmax=" + ne.lat.toFixed(1));
+      // var prevalenceURL = navMap.parseURL(dataUrl + dataService + "/occs/prevalence.json?limit=50&lngmin=" + sw.lng.toFixed(1) + "&lngmax=" + ne.lng.toFixed(1) + "&latmin=" + sw.lat.toFixed(1)  + "&latmax=" + ne.lat.toFixed(1));
+      var prevalenceURL = navMap.parseURL(siteUrl + "/data/prevalence.json?limit=50&lngmin=" + sw.lng.toFixed(1) + "&lngmax=" + ne.lng.toFixed(1) + "&latmin=" + sw.lat.toFixed(1)  + "&latmax=" + ne.lat.toFixed(1));
       currentPrevRequest = d3.json(prevalenceURL, function(error, data) {
         var scale = d3.scale.linear()
           .domain([d3.min(data.records, function(d) {
@@ -826,7 +828,7 @@ var paleo_nav = (function() {
             d3.select("#map").style("height", function() {
               return ((window.innerHeight * 0.70) - 70) + "px";
             });
-            map.setView([7,0], 3, {animate:false});
+            // map.setView([7,0], 3, {animate:false});
             navMap.refresh("reset");
             map.invalidateSize();
           } else {
@@ -870,7 +872,9 @@ var paleo_nav = (function() {
     "dataUrl": dataUrl,
     "testUrl": testUrl,
     "stateUrl": stateUrl,
-    "dataService": dataService
+    "dataService": dataService,
+
+    "siteUrl": siteUrl,
   }
 
 })();

@@ -62,24 +62,30 @@ var navMap = (function() {
     "init": function(callback) {
       // Init the leaflet map
       map = new L.Map('map', {
-        center: new L.LatLng(7, 0),
+        crs: L.CRS.EPSG4326,
+        center: new L.LatLng(39.6395375644, 116.1035156250),
         zoom: 2,
         maxZoom:11,
         minZoom: 2,
         zoomControl: false,
         inertiaDeceleration: 6000,
         inertiaMaxSpeed: 1000,
-        zoomAnimationThreshold: 1
+        zoomAnimationThreshold: 1,
       });
 
-      var attrib = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+      var attrib = '天地图';
 
-      stamen = new L.TileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png', {attribution: attrib}).addTo(map);
+      // stamen = new L.TileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png', {attribution: attrib}).addTo(map);
 
-      stamenLabels = new L.TileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {attribution: attrib});
+      // stamenLabels = new L.TileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {attribution: attrib});
+      
+      stamen = new L.TileLayer('http://t0.tianditu.com/DataServer?T=vec_c&x={x}&y={y}&l={z}', {attribution: attrib}).addTo(map);
+
+      stamenLabels = new L.TileLayer('http://t0.tianditu.com/DataServer?T=cva_c&x={x}&y={y}&l={z}', {attribution: attrib});
+
 
       function mapSelection(zoom) {
-      // If viewing the projected map...
+        // If viewing the projected map...
         var newBounds = map.getBounds();
         if (Math.abs(newBounds._northEast.lng) + Math.abs(newBounds._southWest.lng) > 360) {
           var changeMaps = true;
@@ -245,6 +251,14 @@ var navMap = (function() {
 
 
     "selectBaseMap": function(zoom) {
+      /*
+        stamen为矢量地图一直在，stamenLabels为注记放大后在
+      */
+      if (zoom < 7 && !map.hasLayer(stamenLabels)) {
+          map.addLayer(stamenLabels);
+      }
+
+      /*
       if (zoom < 5) {
         if (map.hasLayer(stamenLabels)) {
           map.removeLayer(stamenLabels);
@@ -263,6 +277,7 @@ var navMap = (function() {
           map.removeLayer(stamen);
         }
       }
+      */
     },
 
     "refresh": function(reset) {
@@ -285,7 +300,8 @@ var navMap = (function() {
           }
         }
 
-        var url = paleo_nav.dataUrl + paleo_nav.dataService + '/colls/summary.json?lngmin=-180&lngmax=180&latmin=-90&latmax=90&show=time';
+        // var url = paleo_nav.siteUrl + '/data/summary.json?lngmin=-180&lngmax=180&latmin=-90&latmax=90&show=time';
+        var url = paleo_nav.siteUrl + '/data/summary.json?lngmin=-180&lngmax=180&latmin=-90&latmax=90&show=time';
 
         // If filters are applied to the map
         if (filtered) {
@@ -408,7 +424,7 @@ var navMap = (function() {
 
       // Depending on the zoom level, call a different service from PaleoDB, feed it a bounding box, and pass it to the proper point parsing function
       if (zoom < 5 && filtered === false) {
-        var url = paleo_nav.dataUrl + paleo_nav.dataService + '/colls/summary.json?lngmin=' + sw.lng + '&lngmax=' + ne.lng + '&latmin=' + sw.lat + '&latmax=' + ne.lat + '&level=2&show=time';
+        var url = paleo_nav.siteUrl + '/data/summary.json?lngmin=' + sw.lng + '&lngmax=' + ne.lng + '&latmin=' + sw.lat + '&latmax=' + ne.lat + '&level=2&show=time';
 
         currentRequest = d3.json(navMap.parseURL(url), function(error, data) {
           if (error) {
@@ -421,7 +437,7 @@ var navMap = (function() {
 
         // If filtered only by a time interval...
         if (filters.exist.selectedInterval === true && !filters.exist.personFilter && !filters.exist.taxon && !filters.exist.stratigraphy) {
-          var url = paleo_nav.dataUrl + paleo_nav.dataService + '/colls/summary.json?lngmin=-180&lngmax=180&latmin=-90&latmax=90&show=time&level=3';
+          var url = paleo_nav.siteUrl + '/data/summary.json?lngmin=-180&lngmax=180&latmin=-90&latmax=90&show=time&level=3';
           url = navMap.parseURL(url);
 
           if (typeof(timeScale.interval_hash[filters.selectedInterval.oid]) != "undefined") {
@@ -443,7 +459,7 @@ var navMap = (function() {
           }
         // If not filtered only by a time interval, refresh normally
         } else {
-          var url = paleo_nav.dataUrl + paleo_nav.dataService + '/colls/summary.json?lngmin=' + sw.lng + '&lngmax=' + ne.lng + '&latmin=' + sw.lat + '&latmax=' + ne.lat + '&level=3&show=time';
+          var url = paleo_nav.siteUrl + '/data/summary.json?lngmin=' + sw.lng + '&lngmax=' + ne.lng + '&latmin=' + sw.lat + '&latmax=' + ne.lat + '&level=3&show=time';
           url = navMap.parseURL(url);
           currentRequest = d3.json(url, function(error, data) {
             if (error) {
@@ -1292,11 +1308,13 @@ var navMap = (function() {
       }
       if (count > 0) {
         d3.select(".filters").style("display", "block");
-        d3.select("#filterTitle").html("Filters");
+        // d3.select("#filterTitle").html("Filters");
+        d3.select("#filterTitle").text("过滤");
         return true;
       } else {
         d3.select(".filters").style("display", "none");
-        d3.select("#filterTitle").html("No filters selected");
+        // d3.select("#filterTitle").html("No filters selected");
+        d3.select("#filterTitle").text("未选过滤选项");
         return false;
       }
     },
@@ -2054,7 +2072,8 @@ var navMap = (function() {
     "setInfoSummary" : function() {
       d3.select(".info")
         .style("display", "block")
-        .html("<strong>" + navMap.totalCollections + " total collections</strong><br>" + navMap.totalOccurrences + " total occurrences");
+        // .html("<strong>" + navMap.totalCollections + " total collections</strong><br>" + navMap.totalOccurrences + " total occurrences");
+        .html("<strong>共收集" + navMap.totalCollections + " 种</strong><br>共收集" + navMap.totalOccurrences + " 种");
     },
 
     "filters": filters,
