@@ -5,7 +5,7 @@ assets-----------------------【源代码】
     diversity.js-------------
     naviagtor.js-------------
     navMap.js----------------
-      refreshHammer----------包括：绘制地图上的圆圈（填充）
+      refreshHammer----------包括：绘制地图上的化石组（填充）
       buildTaxonHierarchy----构建物种分类级别
     reconstruct.js-----------
     taxaBrowser.js-----------
@@ -16,8 +16,10 @@ build------------------------【压缩后的代码，古地图数据】
   collections----------------【古地质-物种】（Bootstrap，d3，leaflet等）
   plates---------------------【古地质-植物】（Bootstrap，d3，leaflet等）
   rotatedIntervals-----------【古地质-植物】（Bootstrap，d3，leaflet等）
-数据：
-    list.json 地质年代表
+
+
+数据（https://www.paleobiodb.org/data1.2/）：
+    colls_list.json 地质年代表
       oid 唯一标识
       tsc 
       lvl 等级（宇界系统阶）
@@ -27,7 +29,7 @@ build------------------------【压缩后的代码，古地图数据】
       lag 结束时期
       rid 
 
-    summary.json 地图上标识的*物种集合*
+    summary.json 地图上*标识的化石组*
       oid 唯一标识
       lat 经度
       lnt 纬度
@@ -35,7 +37,7 @@ build------------------------【压缩后的代码，古地图数据】
       noc 发现个数（occurrences）
       cxi 与地质年代表（list.json）的oid关联
 
-    colls_list.json *物种集合*标识的**详细列表**
+    colls_list.json *标识的化石组*的**详细列表**
       ath："W. Clyde"
       cc2："CN"
       cny："Sihong"
@@ -59,7 +61,7 @@ build------------------------【压缩后的代码，古地图数据】
       rid："ref:6095"
       stp："Jiangsu"
 
-    colls-single.json **详细列表**的***每一项***
+    colls-single.json **详细列表**的***每一项（collections）***
       ath 发现者（Authorizer）
       cc2 "CN"
       cxi 96
@@ -80,10 +82,10 @@ build------------------------【压缩后的代码，古地图数据】
       ref 引用（Reference）
       rid "ref:24689"
 
-    occs_list.json ***每一项***的物种分类表
+    occs_list.json ***每一项（collections）***的物种分类表
       cid "col:11798"
       phl 门（Phylum）
-      cll 钢（Class）
+      cll 纲（Class）
       fml 科（Family）
       tna 种（Genus）
       idg "Lufengpithecus"（Genus）
