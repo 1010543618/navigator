@@ -1660,7 +1660,8 @@ var navMap = (function() {
         selector = "name=" + name;
       }
 
-      d3.json(paleo_nav.dataUrl + paleo_nav.dataService + '/taxa/list.json?' + selector + '&show=seq', function(err, data) {
+      // d3.json(paleo_nav.dataUrl + paleo_nav.dataService + '/taxa/list.json?' + selector + '&show=seq', function(err, data) {
+      d3.json(paleo_nav.siteUrl + '/data/list.json?' + selector + '&show=seq', function(err, data) {
         if (err) {
           alert("Error retrieving from list.json - ", err);
           return paleo_nav.hideLoading();

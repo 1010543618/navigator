@@ -28,7 +28,8 @@ var taxaBrowser = (function(){
     // If there is a taxon to search for...
     if (name.length > 0) {
       // Ask the API for the taxon oid
-      d3.json(paleo_nav.dataUrl + paleo_nav.dataService + '/taxa/list.json?status=all&' + selector, function(err, data) {
+      // d3.json(paleo_nav.dataUrl + paleo_nav.dataService + '/taxa/list.json?status=all&' + selector, function(err, data) {
+      d3.json(paleo_nav.siteUrl + '/data/list.json?status=all&' + selector, function(err, data) {
         if (err) {
           alert("Error retrieving from list.json - ", err);
           paleo_nav.hideLoading();
@@ -64,7 +65,8 @@ var taxaBrowser = (function(){
 
   function getTaxonDetails(taxon) {
     // Ask the API for the details of the selected taxon
-    d3.json(paleo_nav.dataUrl + paleo_nav.dataService + '/taxa/single.json?id=' + taxon.oid + '&show=attr,nav,size', function(err, data) {
+    // d3.json(paleo_nav.dataUrl + paleo_nav.dataService + '/taxa/single.json?id=' + taxon.oid + '&show=attr,nav,size', function(err, data) {
+    d3.json(paleo_nav.siteUrl + '/data/single.json?id=' + taxon.oid + '&show=attr,nav,size', function(err, data) {
       if (err) {
         paleo_nav.hideLoading();
         // This should never be true, unless something goes horrifically wrong
