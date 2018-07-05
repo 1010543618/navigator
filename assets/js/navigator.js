@@ -1,6 +1,8 @@
 var paleo_nav = (function() {
   /* Server to be used for all data service requests;
      If developing locally default to paleobiodb.org, otherwise use localhost */
+  
+  // 数据地址
   var dataUrl = window.location.origin,
       testUrl = "https://paleobiodb.org",
       stateUrl = "https://paleobiodb.org",
@@ -10,13 +12,13 @@ var paleo_nav = (function() {
   if ( window.location.search.indexOf("local") > -1 ) {
     dataUrl = window.location.origin + ":3000";
     testUrl = window.location.origin + ":3000";
-
   } else if (window.location.search.indexOf("test") > -1) {
     dataUrl = "https://training.paleobiodb.org";
   } else if ( window.location.hostname === "localhost" ) {
     dataUrl = "https://paleobiodb.org";
   }
 
+  // 模板
   var prevalencePartial, prevalenceSummaryPartial;
 
   d3.text("build/partials/prevalent.html", function(error, template) {
@@ -26,10 +28,13 @@ var paleo_nav = (function() {
     prevalenceSummaryPartial = template;
   });
 
+  // 返回obj
   return {
     "init": function() {
 
       // Initialize each of the major application components
+
+      // 初始化地质年代轴
       var timeScaleSize;
       if (window.innerWidth > 1800) {
         timeScaleSize = 60;
@@ -51,7 +56,7 @@ var paleo_nav = (function() {
       });
 
 
-      // Handler for the zoom-in button
+      // 放大按钮点击（Handler for the zoom-in button）
       var zoomInButton = $(".zoom-in").hammer();
 
       zoomInButton.on("tap", function(event) {
@@ -62,7 +67,7 @@ var paleo_nav = (function() {
           d3.select("#map").style("height", function() {
             return ((window.innerHeight * 0.70) - 70) + "px";
           });
-          map.setView(new L.LatLng(39.6395375644, 116.1035156250), 3, {animate:false});
+          // map.setView(new L.LatLng(39.6395375644, 116.1035156250), 11, {animate:false});
           navMap.refresh("reset");
           map.invalidateSize();
         } else {
@@ -70,14 +75,14 @@ var paleo_nav = (function() {
         }
       });
 
-      // Handler for the zoom-out button
+      // 缩小按钮点击（Handler for the zoom-out button）
       var zoomOutButton = $(".zoom-out").hammer();
       zoomOutButton.on("tap", function(event) {
         event.preventDefault();
         map.zoomOut();
       });
 
-      // Handler for the rotation/reconstruct UI button
+      // 切换古地质图按钮点击（Handler for the rotation/reconstruct UI button）
       var rotateButton = $(".rotate").hammer();
 
       rotateButton.on("tap", function(event) {
@@ -93,7 +98,7 @@ var paleo_nav = (function() {
         }
       });
 
-      // Handler for the taxa filter UI button
+      // 物种按分类过滤按钮点击（Handler for the taxa filter UI button）
       var taxaButton = $(".taxa").hammer();
 
       taxaButton.on("tap", function(event) {
@@ -109,7 +114,7 @@ var paleo_nav = (function() {
         }
       });
 
-      // Controls the "hide" and "show" taxa browser links
+      // 移动端-物种按分类过滤按钮点击（Controls the "hide" and "show" taxa browser links）
       var mobileTaxaBrowserLink = $("#taxaBrowserNavbar").hammer();
       mobileTaxaBrowserLink.on("tap", function(event) {
         event.preventDefault();
@@ -159,7 +164,7 @@ var paleo_nav = (function() {
         taxaBrowser.goToTaxon(data.nam);
       });
 
-      // If the user hits enter instead of selecting a taxon from the dropdown menu
+      // 输入是按下回车（If the user hits enter instead of selecting a taxon from the dropdown menu）
       $('input#taxonInput').keypress(function(e) {
         if (e.which === 13) {
           var selectedValue = $('input#taxonInput').data().ttView.dropdownView.getFirstSuggestion();
@@ -177,7 +182,7 @@ var paleo_nav = (function() {
         "group": "Gp"
       };
 
-      // new "combined/auto"-based universal autocomplete code
+      // 自动完成（new "combined/auto"-based universal autocomplete code）
       var universalAutocomplete = $("#universalAutocompleteInput").on('keyup', function(event) {
         var autocompleteInput = $("#universalAutocompleteInput").val();
         if (autocompleteInput.length < 3) {
@@ -273,7 +278,7 @@ var paleo_nav = (function() {
         return;
       });
 
-      //attach window resize listener to the window
+      // 窗口大小改变（attach window resize listener to the window）
       d3.select(window).on("resize", function() {
         timeScale.resize();
         navMap.resize();
@@ -288,7 +293,7 @@ var paleo_nav = (function() {
         $(".show-more-collections").data("total-collections", 0);
       });
 
-    // Fires when the "quick diversity plot" modal opens
+      // Fires when the "quick diversity plot" modal opens
       $("#statsBox").on('show.bs.modal', function() {
         $(".statsContent").height(window.innerHeight - 70);
         $(".diversityContainer").height(window.innerHeight - 140)
@@ -328,7 +333,7 @@ var paleo_nav = (function() {
         }
       })
 
-    // Fires when the "full diversity plot" modal opens
+      // Fires when the "full diversity plot" modal opens
       $("#advstatsBox").on('show.bs.modal', function() {
         $(".advstatsContent").height(window.innerHeight - 70);
         $(".advdiversityContainer").height(window.innerHeight - 140)

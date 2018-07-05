@@ -62,8 +62,11 @@ var navMap = (function() {
     "init": function(callback) {
       // Init the leaflet map
       map = new L.Map('map', {
+        // ！！！配置投影
         crs: L.CRS.EPSG4326,
-        center: new L.LatLng(39.6395375644, 116.1035156250),
+        // ！！！配置翻转y轴，不然地图坐标是反的（中国纬度为100多）
+        tms: true,
+        center: new L.LatLng(129.9020004272461, 116.1035156250),
         zoom: 2,
         maxZoom:11,
         minZoom: 2,

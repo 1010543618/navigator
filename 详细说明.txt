@@ -3,8 +3,9 @@ assets-----------------------【源代码】
     lib----------------------【用到的库】（Bootstrap，d3，leaflet等）
     utilities----------------【工具】
     diversity.js-------------
-    naviagtor.js-------------
-    navMap.js----------------
+    naviagtor.js-------------！页面初始化
+      zoomInButton.on--------放大按钮点击
+    navMap.js----------------中间的地图
       refreshHammer----------包括：绘制地图上的化石组（填充）
       buildTaxonHierarchy----构建物种分类级别
     reconstruct.js-----------
