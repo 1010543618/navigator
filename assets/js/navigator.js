@@ -67,7 +67,7 @@ var paleo_nav = (function() {
           d3.select("#map").style("height", function() {
             return ((window.innerHeight * 0.70) - 70) + "px";
           });
-          // map.setView(new L.LatLng(39.6395375644, 116.1035156250), 11, {animate:false});
+          map.setView(new L.LatLng(39.6395375644, 116.1035156250), 3, {animate:false});
           navMap.refresh("reset");
           map.invalidateSize();
         } else {

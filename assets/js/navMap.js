@@ -62,11 +62,7 @@ var navMap = (function() {
     "init": function(callback) {
       // Init the leaflet map
       map = new L.Map('map', {
-        // ！！！配置投影
-        crs: L.CRS.EPSG4326,
-        // ！！！配置翻转y轴，不然地图坐标是反的（中国纬度为100多）
-        tms: true,
-        center: new L.LatLng(129.9020004272461, 116.1035156250),
+        center: new L.LatLng(0, 0),
         zoom: 2,
         maxZoom:11,
         minZoom: 2,
@@ -82,9 +78,14 @@ var navMap = (function() {
 
       // stamenLabels = new L.TileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {attribution: attrib});
       
-      stamen = new L.TileLayer('http://t0.tianditu.com/DataServer?T=vec_c&x={x}&y={y}&l={z}', {attribution: attrib}).addTo(map);
+      // vec_c坐标会乱（纬度上移了90度，中国纬度在100多度），要换成vec_w，那么c和w又有什么区别呢？
+      stamen = L.tileLayer('http://t{s}.tianditu.cn/DataServer?T=vec_w&X={x}&Y={y}&L={z}', {
+          subdomains: ['0', '1', '2', '3', '4', '5', '6', '7']
+        }).addTo(map);
 
-      stamenLabels = new L.TileLayer('http://t0.tianditu.com/DataServer?T=cva_c&x={x}&y={y}&l={z}', {attribution: attrib});
+      stamenLabels = L.tileLayer('http://t{s}.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}', {
+          subdomains: ['0', '1', '2', '3', '4', '5', '6', '7']
+        });
 
 
       function mapSelection(zoom) {
@@ -259,7 +260,7 @@ var navMap = (function() {
       /*
         stamen为矢量地图一直在，stamenLabels为注记放大后在
       */
-      if (zoom < 7 && !map.hasLayer(stamenLabels)) {
+      if (zoom > 7 && !map.hasLayer(stamenLabels)) {
           map.addLayer(stamenLabels);
       }
 
