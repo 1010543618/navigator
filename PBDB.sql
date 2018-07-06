@@ -172,7 +172,7 @@ CREATE VIEW `v_paleo`AS SELECT
   kp.KPPublisher,
   kp.KPPublishTime
 FROM paleo
-INNER JOIN literature ON literature.PaleoGUID = paleo.PaleoGUID
+LEFT JOIN literature ON literature.PaleoGUID = paleo.PaleoGUID
 LEFT JOIN kp ON kp.PaleoGUID = paleo.PaleoGUID
 LEFT JOIN picture ON picture.PaleoGUID = paleo.PaleoGUID
 LEFT JOIN sample ON sample.PaleoGUID = paleo.PaleoGUID;

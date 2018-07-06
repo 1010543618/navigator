@@ -260,8 +260,10 @@ var navMap = (function() {
       /*
         stamen为矢量地图一直在，stamenLabels为注记放大后在
       */
-      if (zoom > 7 && !map.hasLayer(stamenLabels)) {
+      if (zoom >= 7 && !map.hasLayer(stamenLabels)) {
           map.addLayer(stamenLabels);
+      }else if(zoom < 7 && map.hasLayer(stamenLabels)) {
+        map.removeLayer(stamenLabels);
       }
 
       /*
