@@ -6,5 +6,12 @@
   "walkthrough": "预排",
   "waiting-title": "初始化。。。",
   "waiting-text": "可能要花费几分钟，请耐心等待",
-  "filters": "过滤"
+  "filters": "过滤",
+  "Zoom in": "放大",
+  "Zoom out": "缩小",
+  "Toggle paleogeography": "古地图",
+  "Toggle taxa browser": "物种分类",
+  "Toggle stats": "统计",
+  "Save map data": "保存",
+  "See examples": "帮助"
 }

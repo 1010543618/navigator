@@ -309,7 +309,7 @@ var navMap = (function() {
         }
 
         // var url = paleo_nav.siteUrl + '/data/summary.json?lngmin=-180&lngmax=180&latmin=-90&latmax=90&show=time';
-        var url = paleo_nav.siteUrl + '/data/summary.json?lngmin=-180&lngmax=180&latmin=-90&latmax=90&show=time';
+        var url = paleo_nav.siteUrl + '/data/collections_summary.json?lngmin=-180&lngmax=180&latmin=-90&latmax=90&show=time';
 
         // If filters are applied to the map
         if (filtered) {
@@ -432,7 +432,7 @@ var navMap = (function() {
 
       // Depending on the zoom level, call a different service from PaleoDB, feed it a bounding box, and pass it to the proper point parsing function
       if (zoom < 5 && filtered === false) {
-        var url = paleo_nav.siteUrl + '/data/summary.json?lngmin=' + sw.lng + '&lngmax=' + ne.lng + '&latmin=' + sw.lat + '&latmax=' + ne.lat + '&level=2&show=time';
+        var url = paleo_nav.siteUrl + '/data/collections_summary.json?lngmin=' + sw.lng + '&lngmax=' + ne.lng + '&latmin=' + sw.lat + '&latmax=' + ne.lat + '&level=2&show=time';
 
         currentRequest = d3.json(navMap.parseURL(url), function(error, data) {
           if (error) {
@@ -445,7 +445,7 @@ var navMap = (function() {
 
         // If filtered only by a time interval...
         if (filters.exist.selectedInterval === true && !filters.exist.personFilter && !filters.exist.taxon && !filters.exist.stratigraphy) {
-          var url = paleo_nav.siteUrl + '/data/summary.json?lngmin=-180&lngmax=180&latmin=-90&latmax=90&show=time&level=3';
+          var url = paleo_nav.siteUrl + '/data/collections_summary.json?lngmin=-180&lngmax=180&latmin=-90&latmax=90&show=time&level=3';
           url = navMap.parseURL(url);
 
           if (typeof(timeScale.interval_hash[filters.selectedInterval.oid]) != "undefined") {
@@ -467,7 +467,7 @@ var navMap = (function() {
           }
         // If not filtered only by a time interval, refresh normally
         } else {
-          var url = paleo_nav.siteUrl + '/data/summary.json?lngmin=' + sw.lng + '&lngmax=' + ne.lng + '&latmin=' + sw.lat + '&latmax=' + ne.lat + '&level=3&show=time';
+          var url = paleo_nav.siteUrl + '/data/collections_summary.json?lngmin=' + sw.lng + '&lngmax=' + ne.lng + '&latmin=' + sw.lat + '&latmax=' + ne.lat + '&level=3&show=time';
           url = navMap.parseURL(url);
           currentRequest = d3.json(url, function(error, data) {
             if (error) {
@@ -478,7 +478,8 @@ var navMap = (function() {
         }
 
       } else {
-        var url = paleo_nav.dataUrl + paleo_nav.dataService + '/colls/list.json?lngmin=' + sw.lng + '&lngmax=' + ne.lng + '&latmin=' + sw.lat + '&latmax=' + ne.lat + '&show=ref,time,strat,geo,lith,entname,prot&markrefs';
+        // var url = paleo_nav.dataUrl + paleo_nav.dataService + '/colls/list.json?lngmin=' + sw.lng + '&lngmax=' + ne.lng + '&latmin=' + sw.lat + '&latmax=' + ne.lat + '&show=ref,time,strat,geo,lith,entname,prot&markrefs';
+        var url = paleo_nav.siteUrl + '/data/collections_list.json?lngmin=' + sw.lng + '&lngmax=' + ne.lng + '&latmin=' + sw.lat + '&latmax=' + ne.lat + '&show=ref,time,strat,geo,lith,entname,prot&markrefs';
         url = navMap.parseURL(url) ;
         currentRequest = d3.json(url, function(error, data) {
           if (error) {
@@ -573,7 +574,8 @@ var navMap = (function() {
         })
         .on("mouseover", function(d) {
           d3.select(".info")
-            .html("<strong>" + d.nco + " collections</strong><br>" + d.noc + " occurrences")
+            // .html("<strong>" + d.nco + " collections</strong><br>" + d.noc + " occurrences")
+            .html("<strong>" + d.nco + " 集合</strong><br>" + d.noc + " 发现")
             .style("display", "block");
           timeScale.highlight(this);
         })
@@ -605,14 +607,14 @@ var navMap = (function() {
         .style("fill", function(d) { return (timeScale.interval_hash[d.cxi]) ? timeScale.interval_hash[d.cxi].color : "#000"; })
         .on("mouseover", function(d) {
           d3.select(".info")
-            .html("<strong>" + d.nco + " collections</strong><br>" + d.noc + " occurrences")
+            .html("<strong>" + d.nco + " 集合</strong><br>" + d.noc + " 发现")
             .style("display", "block");
           timeScale.highlight(this);
         })
         .on("click", function(d) {
           if (level === 2) {
             d3.select(".info")
-              .html("<strong>" + d.nco + " collections</strong><br>" + d.noc + " occurrences")
+              .html("<strong>" + d.nco + " 集合</strong><br>" + d.noc + " 发现")
               .style("display", "block");
             timeScale.highlight(this);
             navMap.openBinModal(d);
@@ -627,14 +629,14 @@ var navMap = (function() {
         .style("fill", function(d) { return (timeScale.interval_hash[d.cxi]) ? timeScale.interval_hash[d.cxi].color : "#000"; })
         .on("mouseover", function(d) {
           d3.select(".info")
-            .html("<strong>" + d.nco + " collections</strong><br>" + d.noc + " occurrences")
+            .html("<strong>" + d.nco + " 集合</strong><br>" + d.noc + " 发现")
             .style("display", "block");
           timeScale.highlight(this);
         })
         .on("click", function(d) {
           if (level === 2) {
             d3.select(".info")
-              .html("<strong>" + d.nco + " collections</strong><br>" + d.noc + " occurrences")
+              .html("<strong>" + d.nco + " 集合</strong><br>" + d.noc + " 发现")
               .style("display", "block");
             timeScale.highlight(this);
             navMap.openBinModal(d);
@@ -729,13 +731,13 @@ var navMap = (function() {
         .style("fill", function(d) { return timeScale.interval_hash[d.cxi].color; })
         .on("mouseover", function(d) {
           d3.select(".info")
-            .html("<strong>" + d.nam + "</strong><br>" + d.noc + " occurrences")
+            .html("<strong>" + d.nam + "</strong><br>" + d.noc + " 发现")
             .style("display", "block");
           timeScale.highlight(this);
         })
         .on("click", function(d) {
           d3.select(".info")
-            .html("<strong>" + d.nam + "</strong><br>" + d.noc + " occurrences")
+            .html("<strong>" + d.nam + "</strong><br>" + d.noc + " 发现")
             .style("display", "block");
           timeScale.highlight(this);
           navMap.openStackedCollectionModal(d);
@@ -751,7 +753,7 @@ var navMap = (function() {
         .style("fill", function(d) { return (timeScale.interval_hash[d.members[0].cxi]) ? timeScale.interval_hash[d.members[0].cxi].color : "#000"; })
         .on("mouseover", function(d) {
           d3.select(".info")
-            .html("<strong>" + d.members.length + " collections</strong><br>" + d.noc + " occurrences")
+            .html("<strong>" + d.members.length + " 集合</strong><br>" + d.noc + " 发现")
             .style("display", "block");
           timeScale.highlight(this);
         })
@@ -761,7 +763,7 @@ var navMap = (function() {
         })
         .on("click", function(d) {
           d3.select(".info")
-            .html("<strong>" + d.nam + "</strong><br>" + d.noc + " occurrences")
+            .html("<strong>" + d.nam + "</strong><br>" + d.noc + " 发现")
             .style("display", "block");
           timeScale.highlight(this);
           navMap.openStackedCollectionModal(d);
@@ -822,7 +824,7 @@ var navMap = (function() {
     },
 
     "getOffsetCollections": function(cluster, offset) {
-      d3.json(paleo_nav.dataUrl + paleo_nav.dataService + "/colls/list.json?clust_id=" + cluster + "&show=ref,loc,time,strat,geo,lith,entname,prot&markrefs&limit=20&offset=" +offset, function(err, data) {
+      d3.json(paleo_nav.siteUrl + "/data/collections_list.json?clust_id=" + cluster + "&show=ref,loc,time,strat,geo,lith,entname,prot&markrefs&limit=20&offset=" +offset, function(err, data) {
         if (err) {
           return paleo_nav.hideLoading();
         }
@@ -847,7 +849,7 @@ var navMap = (function() {
           var id = d.target.id;
           id = id.replace("occToggle", "");
 
-          var url = navMap.parseURL(paleo_nav.dataUrl + paleo_nav.dataService + "/occs/list.json?coll_id=" + id + "&show=phylo,ident");
+          var url = navMap.parseURL(paleo_nav.siteUrl + "/occurrences_list.json?coll_id=" + id + "&show=phylo,ident");
 
           d3.json(url, function(err, data) {
             if (err) {
@@ -878,7 +880,7 @@ var navMap = (function() {
     "openBinModal": function(d, collections, occurrences, interval) {
       $("#loading").show();
       var id = (d.properties) ? d.properties.oid : d.oid,
-          url = paleo_nav.dataUrl + paleo_nav.dataService + "/colls/list.json?clust_id=" + id;
+          url = paleo_nav.siteUrl + "/data/collections_list.json?clust_id=" + id;
 
       url = navMap.parseURL(url);
       url += "&show=ref,loc,time,strat,geo,lith,entname,prot&markrefs&limit=20&rowcount";
@@ -912,7 +914,7 @@ var navMap = (function() {
             url = navMap.parseURL(url);
             d3.json(url, function(err, data) {
           */
-          d3.json(paleo_nav.dataUrl + paleo_nav.dataService + "/colls/single.json?id=" + id + "&show=ref,time,strat,geo,lith,entname,prot&markrefs", function(err, data) {
+          d3.json(paleo_nav.siteUrl + "/data/collections_single.json?id=" + id + "&show=ref,time,strat,geo,lith,entname,prot&markrefs", function(err, data) {
             if (err) {
               return paleo_nav.hideLoading();
             }
@@ -924,7 +926,7 @@ var navMap = (function() {
           var id = d.target.id;
           id = id.replace("occToggle", "");
 
-          var url = navMap.parseURL(paleo_nav.dataUrl + paleo_nav.dataService + "/occs/list.json?coll_id=" + id + "&show=phylo,ident");
+          var url = navMap.parseURL(paleo_nav.siteUrl + "/data/occurrences_list.json?coll_id=" + id + "&show=phylo,ident");
 
           d3.json(url, function(err, data) {
             if (err) {
@@ -1094,7 +1096,7 @@ var navMap = (function() {
       url = navMap.parseURL(url);
       d3.json(url, function(err, data) {
     */
-      d3.json(paleo_nav.dataUrl + paleo_nav.dataService + "/colls/single.json?id=" + d.oid + "&show=ref,time,strat,geo,lith,entname,prot&markrefs", function(err, data) {
+      d3.json(paleo_nav.siteUrl + "/data/collections_single.json?id=" + d.oid + "&show=ref,time,strat,geo,lith,entname,prot&markrefs", function(err, data) {
         if (err) {
           return paleo_nav.hideLoading();
         }
@@ -1137,7 +1139,7 @@ var navMap = (function() {
           var id = d.target.id;
           id = id.replace("occToggle", "");
 
-          var url = navMap.parseURL(paleo_nav.dataUrl + paleo_nav.dataService + "/occs/list.json?coll_id=" + id + "&show=phylo,ident");
+          var url = navMap.parseURL(paleo_nav.siteUrl + "/data/occurrences_list.json?coll_id=" + id + "&show=phylo,ident");
 
           d3.json(url, function(err, data) {
             if (err) {
@@ -1190,7 +1192,7 @@ var navMap = (function() {
         url = navMap.parseURL(url);
         d3.json(url, function(err, data) {
       */
-        d3.json(paleo_nav.dataUrl + paleo_nav.dataService + "/colls/single.json?id=" + id + "&show=ref,time,strat,geo,lith,entname,prot&markrefs", function(err, data) {
+        d3.json(paleo_nav.siteUrl + "/data/collections_single.json?id=" + id + "&show=ref,time,strat,geo,lith,entname,prot&markrefs", function(err, data) {
           if (err) {
             return paleo_nav.hideLoading();
           }
@@ -1202,7 +1204,7 @@ var navMap = (function() {
           var id = d.target.id;
           id = id.replace("occToggle", "");
 
-          var url = navMap.parseURL(paleo_nav.dataUrl + paleo_nav.dataService + "/occs/list.json?coll_id=" + id + "&show=phylo,ident");
+          var url = navMap.parseURL(paleo_nav.siteUrl + "/data/occurrences_list.json?coll_id=" + id + "&show=phylo,ident");
 
           d3.json(url, function(err, data) {
             if (err) {
@@ -2082,7 +2084,7 @@ var navMap = (function() {
       d3.select(".info")
         .style("display", "block")
         // .html("<strong>" + navMap.totalCollections + " total collections</strong><br>" + navMap.totalOccurrences + " total occurrences");
-        .html("<strong>共收集" + navMap.totalCollections + " 种</strong><br>共收集" + navMap.totalOccurrences + " 种");
+        .html("<strong>共" + navMap.totalCollections + " 个集合</strong><br>共" + navMap.totalOccurrences + " 个发现");
     },
 
     "filters": filters,

@@ -21,7 +21,7 @@ d3.selection.prototype.dblTap = function(callback) {
 var timeScale = (function() {
 
   // var data = { id: 0, color: "#000000", name: "Geologic Time", children: [] },
-  var data = { id: 0, color: "#000000", name: "地理时间", children: [] },
+  var data = { id: 0, color: "#000000", name: "地质年代表", e_name: "Geologic Time", children: [] },
       interval_hash = { 0: data },
       currentInterval,
       dragStart, transformStart;
@@ -107,9 +107,9 @@ var timeScale = (function() {
       .attr("id", "tickBar")
       .attr("transform", "translate(0," + (height + 15) + ")");
 
-    // Load the time scale data
+    // 获取渲染地质年代表的数据（Load the time scale data）
     // d3.json(paleo_nav.dataUrl + paleo_nav.dataService + "/intervals/list.json?scale=1&order=age.desc&max_ma=4000", function(error, result) {
-    d3.json(paleo_nav.siteUrl + "/data/list.json?scale=1&order=age.desc&max_ma=4000", function(error, result) {
+    d3.json(paleo_nav.siteUrl + "/data/intervals_list.json?scale=1&order=age.desc&max_ma=4000", function(error, result) {
       for(var i = 0; i < result.records.length; i++) {
         var r = {
           "id": result.records[i].oid.replace("int:",""),
