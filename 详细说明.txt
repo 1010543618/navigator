@@ -1,23 +1,26 @@
-assets-----------------------【源代码】
-  js-------------------------【JS代码】
-    lib----------------------【用到的库】（Bootstrap，d3，leaflet等）
-    utilities----------------【工具】
-    diversity.js-------------
-    naviagtor.js-------------！页面初始化
-      zoomInButton.on--------放大按钮点击
-    navMap.js----------------中间的地图
-      refresh----------------包括：根据地图级别获取将绘制在地图上的化石组数据
-      refreshHammer----------包括：绘制地图上的化石组（填充）
-      buildTaxonHierarchy----构建物种分类级别
-    reconstruct.js-----------
-    taxaBrowser.js-----------
-    timescale.js-------------
-build------------------------【压缩后的代码，古地图数据】
-  lib------------------------【用到的库】（Bootstrap，d3，leaflet等）
-  coastlines-----------------【古地质-海岸线】（Bootstrap，d3，leaflet等）
-  collections----------------【古地质-物种】（Bootstrap，d3，leaflet等）
-  plates---------------------【古地质-植物】（Bootstrap，d3，leaflet等）
-  rotatedIntervals-----------【古地质-植物】（Bootstrap，d3，leaflet等）
+assets------------------------------【源代码】
+  js--------------------------------【JS代码】
+    lib-----------------------------【用到的库】（Bootstrap，d3，leaflet等）
+    utilities-----------------------【工具】
+    diversity.js--------------------
+    naviagtor.js--------------------！页面初始化
+      zoomInButton.on---------------放大按钮点击
+    navMap.js-----------------------中间的地图
+      openBinModal------------------显示大比例尺下化石集合bin模态窗
+      openCollectionModal-----------显示小比例尺下的单个化石集合模态窗
+      openStackedCollectionModal----显示小比例尺下的化石集合bin模态窗（不用从网上下载）
+      refresh-----------------------包括：根据地图级别获取将绘制在地图上的化石组数据
+      refreshHammer-----------------包括：绘制地图上的化石组（填充）
+      buildTaxonHierarchy-----------构建物种分类级别
+    reconstruct.js------------------
+    taxaBrowser.js------------------
+    timescale.js--------------------
+build-------------------------------【压缩后的代码，古地图数据】
+  lib-------------------------------【用到的库】（Bootstrap，d3，leaflet等）
+  coastlines------------------------【古地质-海岸线】（Bootstrap，d3，leaflet等）
+  collections-----------------------【古地质-物种】（Bootstrap，d3，leaflet等）
+  plates----------------------------【古地质-植物】（Bootstrap，d3，leaflet等）
+  rotatedIntervals------------------【古地质-植物】（Bootstrap，d3，leaflet等）
 
 
 数据（https://www.paleobiodb.org/data1.2/）

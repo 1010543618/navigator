@@ -21,6 +21,9 @@ module.exports = function(grunt) {
         },
 
         uglify: {
+            options: {
+                sourceMap: true
+            },
             build: {
                 files: {
                     'build/js/script.min.js': ['assets/js/lib/bootstrap.min2.js', 'assets/js/lib/typeahead.js', 'assets/js/lib/mustache.js', 'assets/js/navMap.js', 'assets/js/navigator.js', 'assets/js/timescale.js', 'assets/js/reconstruct.js', 'assets/js/taxaBrowser.js', 'assets/js/diversity.js']
